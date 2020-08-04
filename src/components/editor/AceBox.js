@@ -1,26 +1,23 @@
-import React, {useState} from "react";
+import React, {useState, useEffect, useRef} from "react";
 import AceEditor from "react-ace";
-
 import "ace-builds/src-noconflict/mode-java";
 import "ace-builds/src-noconflict/theme-github";
 import "ace-builds/src-noconflict/ext-language_tools"
-
-
 // Render editor
 
 export default function AceBox (props)
 {
-	const [codeValue, setCodeValue] = useState(props.initialCodeValue)
+	// const aceEditorRef = useRef(null)
+	// useEffect(() => {
+	// 	if (aceEditorRef)
+	// 		aceEditorRef.current.editor.value = props.codeValue
+	// }, [props])
 
-	function onChange(newCodeValue) {
-		setCodeValue(newCodeValue)
-	}
-	console.log(props)
 	return (
 		<AceEditor
 			mode={props.mode}
 			theme="github"
-			onChange={onChange}
+			onChange={props.onChange}
 			name="UNIQUE_ID_OF_DIV"
 			editorProps={{ $blockScrolling: true }}
 			setOptions={{
@@ -28,9 +25,10 @@ export default function AceBox (props)
 				enableLiveAutocompletion: true,
 				enableSnippets: true
 			}}
-			value = {codeValue}
+			value = {props.codeValue}
 			height = "500px"
 			width = "80%"
+			// ref = {aceEditorRef}
 		/>
 	)
 }
