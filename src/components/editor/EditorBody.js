@@ -37,16 +37,16 @@ export default function EditorBody() {
 	const [language, setLanguage] = useState(0)
 	const [codeValue, setCodeValue] = useState(initialCodeValues[0])
 	const [tests, setTests] = useState([
-		{ index: 0, input: '', expectedOuput: '' },
-		{ index: 1, input: '', expectedOuput: '' },
-		{ index: 2, input: '', expectedOuput: '' },
-		{ index: 3, input: '', expectedOuput: '' },
-		{ index: 4, input: '', expectedOuput: '' },
-		{ index: 5, input: '', expectedOuput: '' },
-		{ index: 6, input: '', expectedOuput: '' },
-		{ index: 7, input: '', expectedOuput: '' },
-		{ index: 8, input: '', expectedOuput: '' },
-		{ index: 9, input: '', expectedOuput: '' },
+		{ index: 0, input: '1', expectedOutput: '1' },
+		{ index: 1, input: '2', expectedOutput: '2' },
+		{ index: 2, input: '3', expectedOutput: '3' },
+		{ index: 3, input: '', expectedOutput: '' },
+		{ index: 4, input: '', expectedOutput: '' },
+		{ index: 5, input: '', expectedOutput: '' },
+		{ index: 6, input: '', expectedOutput: '' },
+		{ index: 7, input: '', expectedOutput: '' },
+		{ index: 8, input: '', expectedOutput: '' },
+		{ index: 9, input: '', expectedOutput: '' },
 	])
 	function updateValue(newCodeValue) {
 		setCodeValue(newCodeValue)
@@ -62,46 +62,37 @@ export default function EditorBody() {
 	const onRun = async () => {
 		console.log(tests)
 		console.log({codeValue})
-		const body = {
+
+
+		const filteredTests = tests.filter(test => test.expectedOutput !== '')
+		console.log(filteredTests)
+		const bodies = filteredTests.map(test => ({
 			"source_code": codeValue,
-			"stdin": "world",
+			"stdin": test.input,
 			"language": languages[language]
-		}
-		const body2 = {
-			"source_code": codeValue,
-			"stdin": "world2",
-			"language": languages[language]
-		}
-		const body3 = {
-			"source_code": codeValue,
-			"stdin": "world3",
-			"language": languages[language]
-		}
-		const body4 = {
-			"source_code": codeValue,
-			"stdin": "world3",
-			"language": languages[language]
+		}))
+
+		console.log(bodies)
+		const postResponses = []
+		for (let i = 0; i < bodies.length; i++)
+		{
+			postResponses[i] = await axios.post("http://localhost:3001/api/compile", bodies[i])
 		}
 
-		const postResponse = await axios.post("http://localhost:3001/api/compile", body)
-		const postResponse2 = await axios.post("http://localhost:3001/api/compile", body2)
-		const postResponse3 = await axios.post("http://localhost:3001/api/compile", body3)
-		const postResponse4 = await axios.post("http://localhost:3001/api/compile", body4)
+		// const postResponses = bodies.map(async (body) => {
+		// 	console.log(body)
+		// 	const postResponse = await axios.post("http://localhost:3001/api/compile", body)
+		// 	return postResponse
+		// })
+		console.log(postResponses)
 
-		const token = postResponse.data
-		const token2 = postResponse2.data
-		const token3 = postResponse3.data
-		const token4 = postResponse4.data
+		const tokens = postResponses.map(response => response.data)
+		console.log(tokens)
 
-		const result = axios.get(`http://localhost:3001/api/${token}`, { token })
-		const result2 = axios.get(`http://localhost:3001/api/${token2}`, { token2 })
-		const result3 = axios.get(`http://localhost:3001/api/${token3}`, { token })
-		const result4 = axios.get(`http://localhost:3001/api/${token4}`, { token2 })
-		Promise.all([result, result2, result3, result4]).then(results => {
-			console.log(results[0])
-			console.log(results[1])
-			console.log(results[2])
-			console.log(results[3])
+		const submissions = tokens.map(token => axios.get(`http://localhost:3001/api/${token}`, { token }))
+
+		Promise.all(submissions).then(results => {
+			console.log(results)
 		})
 	}
 
