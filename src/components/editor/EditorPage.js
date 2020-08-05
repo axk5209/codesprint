@@ -5,7 +5,7 @@ import EditorHeader from "./EditorHeader"
 export default function EditorPage ()
 {
 	return (
-		<div>
+		<div style = {{background: "#fffbfa"}}>
 			<EditorHeader></EditorHeader>
 			<EditorBody></EditorBody>
 		</div>
