@@ -44,86 +44,40 @@ export default function EditorBody() {
 			"stdin": "world",
 			"language": languages[language]
 		}
-		console.log("running")
+
+		// console.log("running")
+		// const postResponse = await axios.post("http://localhost:3001/api/compile", body)
+		// console.log(postResponse.data)
+		// const token = postResponse.data
+		// const result = await axios.get(`http://localhost:3001/api/${token}`, {token})
+		// console.log(result.data)
+		
+		// const postResponse2 = await axios.post("http://localhost:3001/api/compile", body)
+		// console.log(postResponse2.data)
+		// const token2 = postResponse2.data
+		// const result2 = await axios.get(`http://localhost:3001/api/${token2}`, {token2})
+		// console.log(result2.data)
+
 		const postResponse = await axios.post("http://localhost:3001/api/compile", body)
-		console.log(postResponse.data)
+		const postResponse2 = await axios.post("http://localhost:3001/api/compile", body)
+		const postResponse3 = await axios.post("http://localhost:3001/api/compile", body)
+		const postResponse4 = await axios.post("http://localhost:3001/api/compile", body)
+
 		const token = postResponse.data
-		const result = await axios.get(`http://localhost:3001/api/${token}`, {token})
-		console.log(result.data)
-		// fetch("https://judge0.p.rapidapi.com/submissions", {
-		// 	"method": "POST",
-		// 	"headers": {
-		// 		"x-rapidapi-host": "judge0.p.rapidapi.com",
-		// 		"x-rapidapi-key": "9b0f31e01fmsh859f41ecd1db8bap19b89fjsn60e1e45356ff",
-		// 		"content-type": "application/json",
-		// 		"accept": "application/json"
-		// 	},
-		// 	"body": {
-		// 		"language_id": 50,
-		// 		"source_code": "#include <stdio.h>\n\nint main(void) {\n  char name[10];\n  scanf(\"%s\", name);\n  printf(\"hello %s\\n\", name);\n  return 0;\n}",
-		// 		"stdin": "world"
-		// 	}
-		// })
-		// 	.then(response => {
-		// 		console.log(response);
-		// 	})
-		// 	.catch(err => {
-		// 		console.log(err);
-		// 	});
-		// const body = {
-		// 		"client_secret": "a09873f4450a7c363962c7d72511d17942bcf86f",
-		// 		'async': 0,
-		// 		'source': `class Hello {\n\tpublic static void main(String[] args) {\n\t\tSystem.out.println("Hello Java!"); // Display the string.\n\t}\n}`,  //your source code for which you want to use hackerEarth api
-		// 		'lang': "JAVA",
-		// 		'time_limit': 5,
-		// 		'memory_limit': 262144,
-		// }
-		// try {
-		// 	const response = await axios.post("http://api.hackerearth.com/v3/code/compile/", body)
-		// 	console.log(response)
-		// }
-		// catch (error)
-		// {
-		// 	console.error(error)
-		// }
-		// let HackerEarth = require('hackerearth-node'); //require the Library
-		// //Now set your application 
-		// let hackerEarth = new HackerEarth(
-		// 	'9ba581c5da8b522f4035cda1679749af98b7e828',  //Your Client Secret Key here this is mandatory
-		// 	''  //mode sync=1 or async(optional)=0 or null async is by default and preferred for nodeJS
-		// );
-		// let config = {};
-		// config.time_limit = 1;  //your time limit in integer
-		// config.memory_limit = 323244;  //your memory limit in integer
-		// config.source = `class Hello {\n\tpublic static void main(String[] args) {\n\t\tSystem.out.println("Hello Java!"); // Display the string.\n\t}\n}`  //your source code for which you want to use hackerEarth api
-		// config.input = "";  //input against which you have to test your source code
-		// config.language = "JAVA"; //optional choose any one of them or none
+		const token2 = postResponse2.data
+		const token3 = postResponse3.data
+		const token4 = postResponse4.data
 
-		// //compile your code 
-		// //compile your code 
-		// hackerEarth.run(config)
-		// 	.then(result => {
-		// 		console.log(result)
-		// 	})
-		// 	.catch(err => {
-		// 		console.log(err)
-		// 	});
-
-
-		// 		fetch("https://judge0.p.rapidapi.com/languages", {
-		// 	"method": "GET",
-		// 	"headers": {
-		// 		"x-rapidapi-host": "judge0.p.rapidapi.com",
-		// 		"x-rapidapi-key": "9b0f31e01fmsh859f41ecd1db8bap19b89fjsn60e1e45356ff"
-		// 	}
-		// })
-		// 	.then(response => {
-		// 		console.log(response);
-		// 	})
-		// 	.catch(err => {
-		// 		console.log(err);
-		// 	});
-
+		const result = axios.get(`http://localhost:3001/api/${token}`, {token})
+		const result2 = axios.get(`http://localhost:3001/api/${token2}`, {token2})
+		const result3 = axios.get(`http://localhost:3001/api/${token3}`, {token})
+		const result4 = axios.get(`http://localhost:3001/api/${token4}`, {token2})
+		Promise.all([result, result2, result3, result4]).then(results => {
+			console.log(results[0])
+			console.log(results[1])
+			console.log(results[2])
+			console.log(results[3])
+		})
 	}
 
 	// console.log(language)
