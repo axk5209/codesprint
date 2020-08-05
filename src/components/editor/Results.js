@@ -6,7 +6,7 @@ import Tabs from "@material-ui/core/Tabs";
 import Tab from "@material-ui/core/Tab";
 import Typography from "@material-ui/core/Typography";
 import Box from "@material-ui/core/Box";
-import Test from "./Test"
+import Result from "./Result"
 
 function TabPanel(props) {
   const { children, value, index, ...other } = props;
@@ -32,13 +32,6 @@ TabPanel.propTypes = {
   index: PropTypes.any.isRequired,
   value: PropTypes.any.isRequired
 };
-
-function a11yProps(index) {
-  return {
-    id: `scrollable-auto-tab-${index}`,
-    "aria-controls": `scrollable-auto-tabpanel-${index}`
-  };
-}
 
 const useStyles = makeStyles(theme => ({
   root: {
@@ -68,30 +61,30 @@ export default function ScrollableTabsButtonAuto(props) {
           scrollButtons="auto"
           aria-label="scrollable auto tabs example"
         >
-          <Tab label="Test 1" />
-          <Tab label="Test 2" />
-          <Tab label="Test 3" />
-          <Tab label="Test 4" />
-          <Tab label="Test 5"/>
-          <Tab label="Test 6"  />
-          <Tab label="Test 7" />
-		  <Tab label="Test 8"  />
-          <Tab label="Test 9"  />
-          <Tab label="Test 10"  />
+          <Tab label="Result 1" />
+          <Tab label="Result 2" />
+          <Tab label="Result 3" />
+          <Tab label="Result 4" />
+          <Tab label="Result 5"/>
+          <Tab label="Result 6"  />
+          <Tab label="Result 7" />
+		  <Tab label="Result 8"  />
+          <Tab label="Result 9"  />
+          <Tab label="Result 10"  />
         </Tabs>
       </AppBar>
 	  <br></br>
 	  <br></br>
-      {value === 0 && <Test test = {props.tests[0]} setTests ={props.setTests}></Test>}
-	  {value === 1 && <Test test = {props.tests[1]} setTests ={props.setTests}></Test>}
-	  {value === 2 && <Test test = {props.tests[2]} setTests ={props.setTests}></Test>}
-	  {value === 3 && <Test test = {props.tests[3]} setTests ={props.setTests}></Test>}
-	  {value === 4 && <Test test = {props.tests[4]} setTests ={props.setTests}></Test>}
-	  {value === 5 && <Test test = {props.tests[5]} setTests ={props.setTests}></Test>}
-	  {value === 6 && <Test test = {props.tests[6]} setTests ={props.setTests}></Test>}
-	  {value === 7 && <Test test = {props.tests[7]} setTests ={props.setTests}></Test>}
-	  {value === 8 && <Test test = {props.tests[8]} setTests ={props.setTests}></Test>}
-	  {value === 9 && <Test test = {props.tests[9]} setTests ={props.setTests}></Test>}
+      {value === 0 && <Result result = {props.results[0]} setResults ={props.setResults}></Result>}
+	  {value === 1 && <Result result = {props.results[1]} setResults ={props.setResults}></Result>}
+	  {value === 2 && <Result result = {props.results[2]} setResults ={props.setResults}></Result>}
+	  {value === 3 && <Result result = {props.results[3]} setResults ={props.setResults}></Result>}
+	  {value === 4 && <Result result = {props.results[4]} setResults ={props.setResults}></Result>}
+	  {value === 5 && <Result result = {props.results[5]} setResults ={props.setResults}></Result>}
+	  {value === 6 && <Result result = {props.results[6]} setResults ={props.setResults}></Result>}
+	  {value === 7 && <Result result = {props.results[7]} setResults ={props.setResults}></Result>}
+	  {value === 8 && <Result result = {props.results[8]} setResults ={props.setResults}></Result>}
+	  {value === 9 && <Result result = {props.results[9]} setResults ={props.setResults}></Result>}
 	  <br></br>
 	  <br></br>
     </div>

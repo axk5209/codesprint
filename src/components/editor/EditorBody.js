@@ -39,8 +39,8 @@ export default function EditorBody() {
 	const [tests, setTests] = useState([
 		{ index: 0, input: '1', expectedOutput: '1' },
 		{ index: 1, input: '2', expectedOutput: '2' },
-		{ index: 2, input: '3', expectedOutput: '3' },
-		{ index: 3, input: '', expectedOutput: '' },
+		{ index: 2, input: '', expectedOutput: '' },
+		{ index: 3, input: '4', expectedOutput: '4' },
 		{ index: 4, input: '', expectedOutput: '' },
 		{ index: 5, input: '', expectedOutput: '' },
 		{ index: 6, input: '', expectedOutput: '' },
@@ -69,28 +69,44 @@ export default function EditorBody() {
 		const bodies = filteredTests.map(test => ({
 			"source_code": codeValue,
 			"stdin": test.input,
-			"language": languages[language]
+			"language": languages[language],
+			index: test.index
 		}))
 
 		console.log(bodies)
 		const postResponses = []
 		for (let i = 0; i < bodies.length; i++)
 		{
-			postResponses[i] = await axios.post("http://localhost:3001/api/compile", bodies[i])
+			const postResponse = await axios.post("http://localhost:3001/api/compile", bodies[i])
+			postResponses[i] = {postResponse, index: bodies[i].index}
 		}
 
-		// const postResponses = bodies.map(async (body) => {
-		// 	console.log(body)
-		// 	const postResponse = await axios.post("http://localhost:3001/api/compile", body)
-		// 	return postResponse
-		// })
+		
 		console.log(postResponses)
 
-		const tokens = postResponses.map(response => response.data)
+		const tokens = postResponses.map(responseObject => ({token: responseObject.postResponse.data, index: responseObject.index}))
 		console.log(tokens)
 
-		const submissions = tokens.map(token => axios.get(`http://localhost:3001/api/${token}`, { token }))
+		const submissionObjects = tokens.map(tokenObject => {
+			console.log(tokenObject)
+			const submission = axios.get(`http://localhost:3001/api/${tokenObject.token}`, {token: tokenObject.token})
+			return {submission, index: tokenObject.index}
+		})
+			
+			
+		// const submissions = submissionObjects.map(submissionObject => submissionObject.submission)
 
+		const submissions = []
+		for (let i = 0; i < 10; i++)
+		{
+			submissions[i] = Promise.resolve(null);
+		}
+	
+		for (let i = 0; i < submissionObjects.length; i++)
+		{
+			submissions[submissionObjects[i].index] = submissionObjects[i].submission
+		}
+		console.log(submissions)
 		Promise.all(submissions).then(results => {
 			console.log(results)
 		})

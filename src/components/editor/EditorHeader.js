@@ -21,7 +21,7 @@ export default function LoggedInHeader(props) {
 
 	return (
 		<div className={classes.root}>
-			<AppBar position="static" style={{ background: '#fff5f5' }}>
+			<AppBar position="static" style={{ background: '#fffbfa' }}>
 				<CssBaseline />
 				<Toolbar>
 					<Typography variant="h4" className={classes.titleText}>
