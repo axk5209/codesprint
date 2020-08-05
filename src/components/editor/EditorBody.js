@@ -3,7 +3,9 @@ import { Container, Typography, FormControl, MenuItem, Select, Button, InputLabe
 import { makeStyles } from '@material-ui/core/styles';
 import AceBox from "./AceBox";
 import Tests from "./Tests"
+import Results from "./Results"
 import axios from 'axios'
+import CircularProgress from '@material-ui/core/CircularProgress';
 
 const useStyles = makeStyles((theme) => ({
 	root: {
@@ -31,7 +33,7 @@ export default function EditorBody() {
     '    System.out.println("Enter username");\n' +
     '\n' +
     '    String userName = myObj.nextLine();  // Read user input\n' +
-    '    System.out.println("Username is: " + userName);  // Output user input\n' +
+    '    System.out.println("Username is: " +22 userName);  // Output user input\n' +
     '  }\n' +
     '}', "", "", "", ""]
 	const [language, setLanguage] = useState(0)
@@ -48,6 +50,22 @@ export default function EditorBody() {
 		{ index: 8, input: '', expectedOutput: '' },
 		{ index: 9, input: '', expectedOutput: '' },
 	])
+
+	const [results, setResults] = useState([
+		// { index: 0, expectedOutput: '123', receivedOutput: '113' },
+		// { index: 1, expectedOutput: '234', receivedOutput: '234' },
+		// { index: 2, expectedOutput: '', receivedOutput: '' },
+		// { index: 3, expectedOutput: '4555', receivedOutput: '46' },
+		// { index: 4, expectedOutput: '', receivedOutput: '' },
+		// { index: 5, expectedOutput: '', receivedOutput: '' },
+		// { index: 6, expectedOutput: '', receivedOutput: '' },
+		// { index: 7, expectedOutput: '', receivedOutput: '' },
+		// { index: 8, expectedOutput: '', receivedOutput: '' },
+		// { index: 9, expectedOutput: '', receivedOutput: '' },
+	])
+
+	const [loading, setLoading] = useState(false)
+	const [loaded, setLoaded] = useState(false)
 	function updateValue(newCodeValue) {
 		setCodeValue(newCodeValue)
 	}
@@ -60,6 +78,7 @@ export default function EditorBody() {
 	};
 
 	const onRun = async () => {
+		setLoading(true)
 		console.log(tests)
 		console.log({codeValue})
 
@@ -109,7 +128,13 @@ export default function EditorBody() {
 		console.log(submissions)
 		Promise.all(submissions).then(results => {
 			console.log(results)
+			const newResults = results.map((result, index) => (result ? {result: result.data, expectedOutput: tests[index].expectedOutput} : null))
+			setResults(newResults)
+			console.log(newResults)
+			setLoading(false)
+			setLoaded(true)
 		})
+		
 	}
 
 	// console.log(language)
@@ -141,11 +166,26 @@ export default function EditorBody() {
 				<br></br>
 				<AceBox mode={languages[language].toLowerCase()} onChange={onChange} codeValue={codeValue} />
 				<br></br>
-				<Button size="large" variant="contained" onClick={onRun} style={{ color: "#ffffff", backgroundColor: "#9c5a5a", fontWeight: "bold" }}>Run</Button>
+				<br></br>
+				{
+					!loading && 
+					<Button size="large" variant="contained" onClick={onRun} style={{ color: "#ffffff", backgroundColor: "#9c5a5a", fontWeight: "bold" }}>Run</Button>
+				}
+				{
+					loading && 
+					<>
+						<CircularProgress color="secondary" size = {60}/>
+					</>
+				}
 				<br></br>
 				<br></br>
 				<br></br>
 				<Tests tests={tests} setTests={setTests}></Tests>
+				<br></br>
+				<br></br>
+				<br></br>
+				<br></br>
+				{loaded && <Results results = {results}></Results>}
 			</Container>
 			<br></br>
 			<br></br>

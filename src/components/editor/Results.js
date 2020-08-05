@@ -38,16 +38,35 @@ const useStyles = makeStyles(theme => ({
     flexGrow: 1,
     width: "80%",
     backgroundColor: theme.palette.background.paper
+  },
+  tabs: {
+	border: `1px solid ${theme.palette.divider}`
   }
 }));
 
 export default function ScrollableTabsButtonAuto(props) {
+	console.log(props)
   const classes = useStyles();
   const [value, setValue] = useState(0);
 
   const handleChange = (event, newValue) => {
     setValue(newValue);
   };
+
+  function getColor(result) {
+	  if (result === null)
+	  {
+		  return "#adad97"
+	  }
+	  else if (result.result.stdout === result.expectedOutput)
+	  {
+		return "#3ce895"
+	  }
+	  else 
+	  {
+		  return "#e36d6d"
+	  }
+  }
 
   return (
     <div className={classes.root}>
@@ -56,35 +75,34 @@ export default function ScrollableTabsButtonAuto(props) {
           value={value}
           onChange={handleChange}
           indicatorColor="primary"
-          textColor="primary"
           variant="scrollable"
           scrollButtons="auto"
-          aria-label="scrollable auto tabs example"
+		  aria-label="scrollable auto tabs example"
+		  
         >
-          <Tab label="Result 1" />
-          <Tab label="Result 2" />
-          <Tab label="Result 3" />
-          <Tab label="Result 4" />
-          <Tab label="Result 5"/>
-          <Tab label="Result 6"  />
-          <Tab label="Result 7" />
-		  <Tab label="Result 8"  />
-          <Tab label="Result 9"  />
-          <Tab label="Result 10"  />
+          <Tab label="Result 1" className = {classes.tabs} style = {{backgroundColor: getColor(props.results[0]), textColor: "#000000", fontWeight: "bold"}}/>
+          <Tab label="Result 2" className = {classes.tabs} style = {{backgroundColor: getColor(props.results[1]), textColor: "#000000", fontWeight: "bold"}}/>
+          <Tab label="Result 3" className = {classes.tabs} style = {{backgroundColor: getColor(props.results[2]), textColor: "#000000", fontWeight: "bold"}}/>
+          <Tab label="Result 4" className = {classes.tabs} style = {{backgroundColor: getColor(props.results[3]), textColor: "#000000", fontWeight: "bold"}}/>
+          <Tab label="Result 5" className = {classes.tabs} style = {{backgroundColor: getColor(props.results[4]), textColor: "#000000", fontWeight: "bold"}}/>
+          <Tab label="Result 6" className = {classes.tabs} style = {{backgroundColor: getColor(props.results[5]), textColor: "#000000", fontWeight: "bold"}}/>
+          <Tab label="Result 7" className = {classes.tabs} style = {{backgroundColor: getColor(props.results[6]), textColor: "#000000", fontWeight: "bold"}}/>
+		  <Tab label="Result 8" className = {classes.tabs} style = {{backgroundColor: getColor(props.results[7]), textColor: "#000000", fontWeight: "bold"}}/>
+          <Tab label="Result 9" className = {classes.tabs} style = {{backgroundColor: getColor(props.results[8]), textColor: "#000000", fontWeight: "bold"}}/>
+          <Tab label="Result 10" className = {classes.tabs} style = {{backgroundColor: getColor(props.results[9]), textColor: "#000000", fontWeight: "bold"}}/>
         </Tabs>
       </AppBar>
-	  <br></br>
-	  <br></br>
-      {value === 0 && <Result result = {props.results[0]} setResults ={props.setResults}></Result>}
-	  {value === 1 && <Result result = {props.results[1]} setResults ={props.setResults}></Result>}
-	  {value === 2 && <Result result = {props.results[2]} setResults ={props.setResults}></Result>}
-	  {value === 3 && <Result result = {props.results[3]} setResults ={props.setResults}></Result>}
-	  {value === 4 && <Result result = {props.results[4]} setResults ={props.setResults}></Result>}
-	  {value === 5 && <Result result = {props.results[5]} setResults ={props.setResults}></Result>}
-	  {value === 6 && <Result result = {props.results[6]} setResults ={props.setResults}></Result>}
-	  {value === 7 && <Result result = {props.results[7]} setResults ={props.setResults}></Result>}
-	  {value === 8 && <Result result = {props.results[8]} setResults ={props.setResults}></Result>}
-	  {value === 9 && <Result result = {props.results[9]} setResults ={props.setResults}></Result>}
+
+      {value === 0 && <Result result = {props.results[0]}></Result>}
+	  {value === 1 && <Result result = {props.results[1]} ></Result>}
+	  {value === 2 && <Result result = {props.results[2]} ></Result>}
+	  {value === 3 && <Result result = {props.results[3]} ></Result>}
+	  {value === 4 && <Result result = {props.results[4]} ></Result>}
+	  {value === 5 && <Result result = {props.results[5]}></Result>}
+	  {value === 6 && <Result result = {props.results[6]} ></Result>}
+	  {value === 7 && <Result result = {props.results[7]} ></Result>}
+	  {value === 8 && <Result result = {props.results[8]} ></Result>}
+	  {value === 9 && <Result result = {props.results[9]} ></Result>}
 	  <br></br>
 	  <br></br>
     </div>

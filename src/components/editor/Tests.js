@@ -68,7 +68,7 @@ export default function ScrollableTabsButtonAuto(props) {
           scrollButtons="auto"
           aria-label="scrollable auto tabs example"
         >
-          <Tab label="Test 1" />
+          <Tab label="Test 1"/>
           <Tab label="Test 2" />
           <Tab label="Test 3" />
           <Tab label="Test 4" />
