@@ -48,7 +48,7 @@ const useStyles = makeStyles(theme => ({
   }
 }));
 
-export default function ScrollableTabsButtonAuto() {
+export default function ScrollableTabsButtonAuto(props) {
   const classes = useStyles();
   const [value, setValue] = useState(0);
 
@@ -82,16 +82,16 @@ export default function ScrollableTabsButtonAuto() {
       </AppBar>
 	  <br></br>
 	  <br></br>
-      {value === 0 && <Test></Test>}
-	  {value === 1 && <Test></Test>}
-	  {value === 2 && <Test></Test>}
-	  {value === 3 && <Test></Test>}
-	  {value === 4 && <Test></Test>}
-	  {value === 5 && <Test></Test>}
-	  {value === 6 && <Test></Test>}
-	  {value === 7 && <Test></Test>}
-	  {value === 8 && <Test></Test>}
-	  {value === 9 && <Test></Test>}
+      {value === 0 && <Test test = {props.tests[0]} setTests ={props.setTests}></Test>}
+	  {value === 1 && <Test test = {props.tests[1]} setTests ={props.setTests}></Test>}
+	  {value === 2 && <Test test = {props.tests[2]} setTests ={props.setTests}></Test>}
+	  {value === 3 && <Test test = {props.tests[3]} setTests ={props.setTests}></Test>}
+	  {value === 4 && <Test test = {props.tests[4]} setTests ={props.setTests}></Test>}
+	  {value === 5 && <Test test = {props.tests[5]} setTests ={props.setTests}></Test>}
+	  {value === 6 && <Test test = {props.tests[6]} setTests ={props.setTests}></Test>}
+	  {value === 7 && <Test test = {props.tests[7]} setTests ={props.setTests}></Test>}
+	  {value === 8 && <Test test = {props.tests[8]} setTests ={props.setTests}></Test>}
+	  {value === 9 && <Test test = {props.tests[9]} setTests ={props.setTests}></Test>}
 	  <br></br>
 	  <br></br>
     </div>
