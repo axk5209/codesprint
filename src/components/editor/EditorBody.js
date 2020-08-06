@@ -88,7 +88,7 @@ export default function EditorBody() {
 		const postResponses = []
 		for (let i = 0; i < bodies.length; i++)
 		{
-			const postResponse = await axios.post("http://localhost:3001/api/compile", bodies[i])
+			const postResponse = await axios.post("/api/compile", bodies[i])
 			postResponses[i] = {postResponse, index: bodies[i].index}
 		}
 
@@ -100,7 +100,7 @@ export default function EditorBody() {
 
 		const submissionObjects = tokens.map(tokenObject => {
 			//console.log(tokenObject)
-			const submission = axios.get(`http://localhost:3001/api/${tokenObject.token}`, {token: tokenObject.token})
+			const submission = axios.get(`/api/${tokenObject.token}`, {token: tokenObject.token})
 			return {submission, index: tokenObject.index}
 		})
 			
