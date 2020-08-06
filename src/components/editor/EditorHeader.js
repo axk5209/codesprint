@@ -25,7 +25,7 @@ export default function LoggedInHeader(props) {
 				<CssBaseline />
 				<Toolbar>
 					<Typography variant="h4" className={classes.titleText}>
-							Code Sprint
+							Sprint Code
 					</Typography>
 				</Toolbar>
 			</AppBar>
