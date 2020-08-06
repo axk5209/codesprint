@@ -24,25 +24,17 @@ const useStyles = makeStyles((theme) => ({
 
 export default function EditorBody() {
 	const classes = useStyles()
-	const languages = ["java", "c++", "python", "javascript"]
-	const initialCodeValues = ['import java.util.Scanner;  // Import the Scanner class\n' +
-    '\n' +
-    'class Main {\n' +
-    '  public static void main(String[] args) {\n' +
-    '    Scanner myObj = new Scanner(System.in);  // Create a Scanner object\n' +
-    '    System.out.println("Enter username");\n' +
-    '\n' +
-    '    String userName = myObj.nextLine();  // Read user input\n' +
-    '    System.out.println("Username is: " +22 userName);  // Output user input\n' +
-    '  }\n' +
-    '}', "", "", "", ""]
+	const languages = ["java", "c", "c++", "python", "javascript"]
 	const [language, setLanguage] = useState(0)
-	const [codeValue, setCodeValue] = useState(initialCodeValues[0])
+	const [codeValue, setCodeValue] = useState("")
+	// const [codeValue, setCodeValue] = useState(
+	// 	window.localStorage.getItem('codeValue') ? JSON.parse(window.localStorage.getItem('codeValue')) : ""
+	// )
 	const [tests, setTests] = useState([
-		{ index: 0, input: '1', expectedOutput: '1' },
-		{ index: 1, input: '2', expectedOutput: '2' },
+		{ index: 0, input: '', expectedOutput: '' },
+		{ index: 1, input: '', expectedOutput: '' },
 		{ index: 2, input: '', expectedOutput: '' },
-		{ index: 3, input: '4', expectedOutput: '4' },
+		{ index: 3, input: '', expectedOutput: '' },
 		{ index: 4, input: '', expectedOutput: '' },
 		{ index: 5, input: '', expectedOutput: '' },
 		{ index: 6, input: '', expectedOutput: '' },
@@ -71,20 +63,20 @@ export default function EditorBody() {
 	}
 	const handleChange = event => {
 		setLanguage(event.target.value);
-		updateValue(initialCodeValues[event.target.value])
 	};
 	const onChange = newCodeValue => {
 		updateValue(newCodeValue)
+		// localStorage.setItem('codeValue', JSON.stringify(newCodeValue)); 
 	};
 
 	const onRun = async () => {
 		setLoading(true)
-		console.log(tests)
-		console.log({codeValue})
+		//console.log(tests)
+		//console.log({codeValue})
 
 
 		const filteredTests = tests.filter(test => test.expectedOutput !== '')
-		console.log(filteredTests)
+		//console.log(filteredTests)
 		const bodies = filteredTests.map(test => ({
 			"source_code": codeValue,
 			"stdin": test.input,
@@ -92,7 +84,7 @@ export default function EditorBody() {
 			index: test.index
 		}))
 
-		console.log(bodies)
+		//console.log(bodies)
 		const postResponses = []
 		for (let i = 0; i < bodies.length; i++)
 		{
@@ -101,13 +93,13 @@ export default function EditorBody() {
 		}
 
 		
-		console.log(postResponses)
+		//console.log(postResponses)
 
 		const tokens = postResponses.map(responseObject => ({token: responseObject.postResponse.data, index: responseObject.index}))
-		console.log(tokens)
+		//console.log(tokens)
 
 		const submissionObjects = tokens.map(tokenObject => {
-			console.log(tokenObject)
+			//console.log(tokenObject)
 			const submission = axios.get(`http://localhost:3001/api/${tokenObject.token}`, {token: tokenObject.token})
 			return {submission, index: tokenObject.index}
 		})
@@ -125,12 +117,12 @@ export default function EditorBody() {
 		{
 			submissions[submissionObjects[i].index] = submissionObjects[i].submission
 		}
-		console.log(submissions)
+		//console.log(submissions)
 		Promise.all(submissions).then(results => {
-			console.log(results)
+			//console.log(results)
 			const newResults = results.map((result, index) => (result ? {result: result.data, expectedOutput: tests[index].expectedOutput} : null))
 			setResults(newResults)
-			console.log(newResults)
+			//console.log(newResults)
 			setLoading(false)
 			setLoaded(true)
 		})
@@ -157,19 +149,21 @@ export default function EditorBody() {
 						onChange={handleChange}
 					>
 						<MenuItem value={0}>Java</MenuItem>
-						<MenuItem value={1}>C++</MenuItem>
-						<MenuItem value={2}>Python</MenuItem>
-						<MenuItem value={3}>Javascript</MenuItem>
+						<MenuItem value={1}>C</MenuItem>
+						<MenuItem value={2}>C++</MenuItem>
+						<MenuItem value={3}>Python</MenuItem>
+						<MenuItem value={4}>Javascript</MenuItem>
 					</Select>
 				</FormControl>
 				<br></br>
 				<br></br>
 				<AceBox mode={languages[language].toLowerCase()} onChange={onChange} codeValue={codeValue} />
+				<Typography>Note for Java users: Put your main (execution) method in a class named "Main"</Typography>
 				<br></br>
 				<br></br>
 				{
 					!loading && 
-					<Button size="large" variant="contained" onClick={onRun} style={{ color: "#ffffff", backgroundColor: "#9c5a5a", fontWeight: "bold" }}>Run</Button>
+					<Button size="large" variant="contained" onClick={onRun} style={codeValue.replace(/^\s+|\s+$/g, '') === '' ? { color: "#000000", backgroundColor: "#807373"} : {color: "#ffffff", backgroundColor: "#9c5a5a", fontWeight: "bold" }} disabled = {codeValue.replace(/^\s+|\s+$/g, '') === ''}>Run Tests</Button>
 				}
 				{
 					loading && 

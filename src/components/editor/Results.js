@@ -45,7 +45,7 @@ const useStyles = makeStyles(theme => ({
 }));
 
 export default function ScrollableTabsButtonAuto(props) {
-	console.log(props)
+	//console.log(props)
   const classes = useStyles();
   const [value, setValue] = useState(0);
 
@@ -58,7 +58,7 @@ export default function ScrollableTabsButtonAuto(props) {
 	  {
 		  return "#adad97"
 	  }
-	  else if (result.result.stdout === result.expectedOutput)
+	  else if (result.result.status.description === "Accepted" && result.result.stdout.replace(/^\s+|\s+$/g, '') === result.expectedOutput.replace(/^\s+|\s+$/g, ''))
 	  {
 		return "#3ce895"
 	  }

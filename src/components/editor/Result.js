@@ -23,7 +23,7 @@ const useStyles = makeStyles((theme) =>
 
 export default function MultilineTextFields(props) {
 	const classes = useStyles();
-	console.log(props)
+	//console.log(props)
 	if (!props.result)
 	{	
 		return (
@@ -38,6 +38,8 @@ export default function MultilineTextFields(props) {
 					<br></br>
 					<br></br>
 					<Typography variant = "h6">You did not enter an expected output for this test.</Typography>
+					<br></br>
+					<br></br>
 					<br></br>
 					<br></br>
 					<br></br>
@@ -61,6 +63,43 @@ export default function MultilineTextFields(props) {
 					<TextField multiline rows={12} variant="outlined" disabled className = {classes.output} value={props.result.result.compile_output} />
 					<br></br>
 					<br></br>
+					<br></br>
+					<br></br>
+				</div>
+			</form>
+		);
+	}
+	else if (props.result.result.status.description.includes("Runtime Error"))
+	{
+		return (
+			<form className={classes.root} noValidate autoComplete="off">
+				<br></br>
+				<Typography variant = "h5">Run-Time Error</Typography>
+	
+				<div>
+					<TextField label="System Error" multiline rows={5} variant="outlined" disabled className = {classes.output} value={props.result.result.stderr ? props.result.result.stderr : " "} />
+					<br></br>
+					<TextField label="System Output" multiline rows={5} variant="outlined" disabled className = {classes.output} value={props.result.result.stdout ? props.result.result.stdout : " "} />
+					<br></br>
+					<br></br>
+					<Typography>Execution Time: {props.result.result.time}</Typography>
+				</div>
+			</form>
+		);
+	}
+	else if (props.result.result.status.description === "Time Limit Exceeded")
+	{
+		return (
+			<form className={classes.root} noValidate autoComplete="off">
+				<br></br>
+				<Typography variant = "h5">Time Limit Exceeded</Typography>
+				<div>
+					<TextField label="System Error" multiline rows={4} variant="outlined" disabled className = {classes.output} value={props.result.result.stderr ? props.result.result.stderr : " "} />
+					<br></br>
+					<TextField label="System Output" multiline rows={4} variant="outlined" disabled className = {classes.output} value={props.result.result.stdout ? props.result.result.stdout : " "} />
+					<br></br>
+					<br></br>
+					<Typography>Execution Time: {props.result.result.time}</Typography>
 				</div>
 			</form>
 		);
@@ -76,44 +115,11 @@ export default function MultilineTextFields(props) {
 					<br></br>
 					<br></br>
 					<TextField label="Received Output" multiline rows={5} variant="outlined" disabled className = {classes.output} value={props.result.result.stdout} />
+					<br></br>
+					<br></br>
+					<Typography>Execution Time: {props.result.result.time} seconds</Typography>
 				</div>
 			</form>
 		);
 	}
 }
-
-/*
-import React from "react";
-import { createStyles, makeStyles } from "@material-ui/core/styles";
-import {List, ListItem, Divider, ListItemText, Container} from "@material-ui/core";
-
-const useStyles = makeStyles((theme) =>
-	createStyles({
-		root: {
-			"& .MuiTextField-root": {
-				width: "80%",
-			}
-		}
-	})
-);
-
-export default function MultilineTextFields(props) {
-	const classes = useStyles();
-
-	return (
-			<div className={classes.root}>
-				<Container align = "center">
-					<List>
-						<ListItem>
-							<ListItemText primary="Expected Output" secondary={props.result.expectedOutput} style={{ wordWrap: "break-word", whiteSpace: 'pre-line' }} />
-						</ListItem>
-						<br></br>
-						<ListItem>
-							<ListItemText primary="Received Output" secondary={props.result.receivedOutput} style={{ wordWrap: "break-word", whiteSpace: 'pre-line' }} />
-						</ListItem>
-					</List>
-				</Container>
-			</div>
-	);
-}
-*/

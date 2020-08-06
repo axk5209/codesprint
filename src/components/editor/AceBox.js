@@ -15,7 +15,7 @@ export default function AceBox (props)
 
 	return (
 		<AceEditor
-			mode={props.mode}
+			mode="java"
 			theme="github"
 			onChange={props.onChange}
 			name="UNIQUE_ID_OF_DIV"
